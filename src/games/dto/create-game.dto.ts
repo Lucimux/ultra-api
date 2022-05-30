@@ -1,11 +1,4 @@
-import {
-  IsNotEmpty,
-  IsString,
-  IsNumber,
-  IsDateString,
-  IsArray,
-  ValidateNested
-} from 'class-validator'
+import { IsNotEmpty, IsString, IsNumber, IsDateString, IsArray, ValidateNested } from 'class-validator'
 import { Type } from 'class-transformer'
 import { Publisher } from './publisher-validation.dto'
 

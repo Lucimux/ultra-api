@@ -1,19 +1,15 @@
-import {
-    IsNotEmpty,
-    IsString,
-    IsNumber,
-} from 'class-validator'
+import { IsNotEmpty, IsString, IsNumber } from 'class-validator'
 
 export class Publisher {
-    @IsNotEmpty()
-    @IsString()
-    name: string
+  @IsNotEmpty()
+  @IsString()
+  name: string
 
-    @IsNotEmpty()
-    @IsNumber()
-    siret: number
+  @IsNotEmpty()
+  @IsNumber()
+  siret: number
 
-    @IsNotEmpty()
-    @IsString()
-    phone: string
+  @IsNotEmpty()
+  @IsString()
+  phone: string
 }

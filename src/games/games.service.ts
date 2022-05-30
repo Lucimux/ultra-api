@@ -19,13 +19,10 @@ export class GamesService {
       id: this.randomId(),
       publisher: {
         id: this.randomId(),
-        ...publisher
-      }
+        ...publisher,
+      },
     }
-    this.gamesArray = [
-      ...this.gamesArray,
-      newGame
-    ]
+    this.gamesArray = [...this.gamesArray, newGame]
     return newGame
   }
 
@@ -57,8 +54,8 @@ export class GamesService {
       ...updateGameDto,
       publisher: {
         ...this.gamesArray[gameIndex].publisher,
-        ...publisher
-      }
+        ...publisher,
+      },
     }
     return true
   }
@@ -84,15 +81,14 @@ export class GamesService {
   @Cron('30 * * * * *')
   applyDiscount(): void {
     this.logger.debug('Applying discounts')
-    const oldGames = this.gamesArray
-      .filter(
-        ({ releaseDate }) => this.diffInDays(releaseDate) >= _12_MONTHS && this.diffInDays(releaseDate) <= _18_MONTHS
-      )
+    const oldGames = this.gamesArray.filter(
+      ({ releaseDate }) => this.diffInDays(releaseDate) >= _12_MONTHS && this.diffInDays(releaseDate) <= _18_MONTHS
+    )
     oldGames.forEach(({ id, price }) => {
       const gameIndex = this.gamesArray.findIndex((item) => item.id === id)
       this.gamesArray[gameIndex] = {
         ...this.gamesArray[gameIndex],
-        price: price - (price * DISCOUNT)
+        price: price - price * DISCOUNT,
       }
     })
     this.logger.debug(`${oldGames.length} discounts applied`)
@@ -101,10 +97,7 @@ export class GamesService {
   @Cron('45 * * * * *')
   deleteOlder(): void {
     this.logger.debug('Deleting old games')
-    const newGamesList = this.gamesArray
-      .filter(
-        ({ releaseDate }) => this.diffInDays(releaseDate) < _18_MONTHS
-      )
+    const newGamesList = this.gamesArray.filter(({ releaseDate }) => this.diffInDays(releaseDate) < _18_MONTHS)
     this.gamesArray = newGamesList
   }
 }

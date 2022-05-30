@@ -16,7 +16,7 @@ import { CreateGameDto, UpdateGameDto } from './dto'
 
 @Controller('games')
 export class GamesController {
-  constructor(private readonly gamesService: GamesService) { }
+  constructor(private readonly gamesService: GamesService) {}
 
   @Post()
   create(@Body() createGameDto: CreateGameDto) {
@@ -29,10 +29,7 @@ export class GamesController {
   }
 
   @Get(':id')
-  findOne(
-    @Param('id', ParseIntPipe) id: number,
-    @Query('getOnlyPublisher') getOnlyPublisher: string
-  ) {
+  findOne(@Param('id', ParseIntPipe) id: number, @Query('getOnlyPublisher') getOnlyPublisher: string) {
     const game = this.gamesService.findOne(id, Boolean(getOnlyPublisher))
     if (!game) {
       throw new HttpException('Game not found', HttpStatus.BAD_REQUEST)
