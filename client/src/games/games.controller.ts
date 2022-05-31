@@ -16,7 +16,7 @@ import { CreateGameDto, UpdateGameDto } from './dto'
 
 @Controller('games')
 export class GamesController {
-  constructor(private readonly gamesService: GamesService) {}
+  constructor(private readonly gamesService: GamesService) { }
 
   @Post()
   create(@Body() createGameDto: CreateGameDto) {

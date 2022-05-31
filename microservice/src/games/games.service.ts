@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { DISCOUNT, _12_MONTHS, _18_MONTHS } from 'src/utils/constants'
-import { CreateGameDto, UpdateGameDto } from './dto'
+import { CreateGameDto, UpdateGameDto, FindOneDto } from './dto'
 import { Game } from './entities/game.entity'
 import { Cron } from '@nestjs/schedule'
 
@@ -35,7 +35,7 @@ export class GamesService {
     }
   }
 
-  findOne(id: number, getOnlyPublisher: boolean): Game {
+  findOne({ id, getOnlyPublisher }: FindOneDto): Game {
     const getGame = this.gamesArray.find((item) => item.id === id)
     if (getGame && getOnlyPublisher) {
       return getGame.publisher
@@ -43,8 +43,8 @@ export class GamesService {
     return getGame
   }
 
-  update(id: number, { publisher, ...updateGameDto }: UpdateGameDto): boolean {
-    const game = this.findOne(id, false)
+  update({ id, publisher, ...updateGameDto }: UpdateGameDto): boolean {
+    const game = this.findOne({ id, getOnlyPublisher: false })
     if (!game) {
       return false
     }
@@ -61,7 +61,7 @@ export class GamesService {
   }
 
   remove(id: number): boolean {
-    const game = this.findOne(id, false)
+    const game = this.findOne({ id, getOnlyPublisher: false })
     if (!game) {
       return false
     }
